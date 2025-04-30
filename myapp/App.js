@@ -1,5 +1,5 @@
 import { AppRegistry } from "react-native";
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView } from "react-native";
 import { useState } from "react";
 
     export default function App(){
@@ -7,52 +7,88 @@ import { useState } from "react";
         const [segundoNumero, setSegundoNumero] = useState(0);
         const [resultado, setResultado] = useState(0);
 
+        function somar(){
+            setResultado(parseFloat (primeiroNumero) + parseFloat (segundoNumero));
+            return setResultado;
+        }//fim do método somar
+
+        function subtrair(){
+            setResultado(parseFloat (primeiroNumero) - parseFloat (segundoNumero));
+            return setResultado;
+        }//fim do método subtrair
+
+        function multiplicar(){
+            setResultado(parseFloat (primeiroNumero) * parseFloat (segundoNumero));
+            return setResultado;
+        }//fim do método multiplicar
+
+        function dividir(){
+            if(parseFloat(segundoNumero)<= 0){
+                setResultado("Impossível dividir por zero!");
+            }else{
+                setResultado(parseFloat (primeiroNumero) / parseFloat (segundoNumero));
+            }
+            return setResultado;
+        }//fim do método dividir
+
+        function limpar(){
+            setPrimeiroNumero(0);
+            setSegundoNumero(0);
+            setResultado(0);
+        }//fim do método Limpar
+
+
+        
+
+
         return (
             <View style ={styles.tela}>
                 <Text style = {styles.tituloPrograma}>Calculadora</Text>
+                <ScrollView>
+                    <View style ={styles.primeiroCampo}>
+                        <TextInput style={styles.input} value={primeiroNumero} onChangeText={novoNumero => setPrimeiroNumero(novoNumero)} placeholder="Informe um número: "/>
+                    </View>
 
-                <View style ={styles.primeiroCampo}>
-                    <TextInput style={styles.input} placeholder="Informe um número: "/>
-                </View>
+                    <View style={styles.segundoCampo}>
+                        <TextInput style={styles.input} value={segundoNumero} onChangeText={novoNumero => setSegundoNumero(novoNumero)} placeholder="Informe outro número: "/>
+                    </View>
 
-                <View style={styles.segundoCampo}>
-                    <TextInput style={styles.input} placeholder="Informe outro número: "/>
-                </View>
+                    <View style={styles.areaBotoes}>
 
-                <View style={styles.areaBotoes}>
+                        <TouchableOpacity style={styles.botao} onPress={somar}>
+                            <Text style={styles.texto}>Somar</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.botao}>
-                        <Text>Somar</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.botao} onPress={subtrair}>
+                            <Text style={styles.texto}>Subtrair</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.botao}>
-                        <Text>Subtrair</Text>
-                    </TouchableOpacity>
+                    </View>
+                    {/*comentario*/ }
 
-                </View>
-                {/*comentario*/ }
+                    <View style={styles.areaBotoes}>    
 
-                <View style={styles.areaBotoes}>    
+                        <TouchableOpacity style={styles.botao} onPress={multiplicar}>
+                            <Text style={styles.texto}>Multiplicar</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.botao}>
-                        <Text>Multiplicar</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.botao} onPress={dividir}>
+                            <Text style={styles.texto}>Dividir</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.botao}>
-                        <Text>Dividir</Text>
-                    </TouchableOpacity>
+                    </View>
 
-                </View>
+                    <View style={styles.areaLimpar}>
+                        <TouchableOpacity style={styles.botao} onPress={limpar}>
+                            <Text>Limpar</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                <View style={styles.areaBotoes}>
-                    <TouchableOpacity style={styles.botao}>
-                        <Text>Limpar</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.areaResultado}>
-                    <Text style={styles.textoResultado}>{resultado}</Text>
-                </View>
+                    <View style={styles.areaResultado}>
+                        <Text style={styles.textoResultado}>{resultado}</Text>
+                    </View>
+                </ScrollView>
+                
 
 
 
@@ -91,7 +127,7 @@ import { useState } from "react";
             width: "90%",
         },
         input:{
-            textAllign: "center",
+            textAlign: "center",
             fontSize: 15 ,
             color: "#fff",
         },
@@ -99,7 +135,7 @@ import { useState } from "react";
             marginTop: 20,
             backgroundColor: "#444444",
             padding: 20,
-            allignItens: "center",
+            alignItems: "center",
             width: "50%",
             borderColor: "#94fabc",
             borderWidth: 2,
@@ -119,6 +155,16 @@ import { useState } from "react";
             color:"#fff",
             fontSize:30,
             textAlign: "center",
+        },
+        areaLimpar:{
+            marginTop: 10,
+            width: 780,
+
+        },
+        texto:{
+            textAlign: "center",
+            fontSize:15,
+            color:"#aff",
         },
 
     });
